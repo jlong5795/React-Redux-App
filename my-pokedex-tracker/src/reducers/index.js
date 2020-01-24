@@ -5,9 +5,11 @@ import {
     } from '../actions';
 
 const initialState = {
-    pokemon: null,
+    pokemon: {},
     isLoading: false,
-    error: null
+    error: null,
+    initialized: false,
+    pokeIndex: 0
 };
 
 export const pokeDataReducer = (state = initialState, action) => {
@@ -28,7 +30,9 @@ export const pokeDataReducer = (state = initialState, action) => {
                     height: action.payload.height,
                     weight: action.payload.weight,
                     id: action.payload.id
-                }
+                },
+                initialized: true,
+                pokeIndex: action.payload.id
             }
         case FETCHING_POKEMON_FAILURE:
             return {

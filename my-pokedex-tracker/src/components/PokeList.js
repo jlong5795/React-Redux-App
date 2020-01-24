@@ -3,32 +3,26 @@ import { connect } from 'react-redux';
 
 import Pokemon from './Pokemon';
 
-import { fetchPokemonByNumber, fetchPokemonByName } from '../actions';
+import { fetchNextPokemonByNumber, fetchPrevPokemonByNumber, fetchPokemonByName } from '../actions';
 
 const PokeList = props => {
     
     const [newPokemon, setNewPokemon] = useState('');
-    const [pokemonNumber, setPokemonNumber] = useState(2);
-
+    
     const handleChanges = e => {
         setNewPokemon(e.target.value.toLowerCase());
     };
 
     const nextPokemon = () => {
-        const tempNumber = props.pokemon.id + 1;
-        setPokemonNumber(tempNumber);
-        props.fetchPokemonByNumber(pokemonNumber);
+        props.fetchNextPokemonByNumber(props.pokeIndex);
     }
 
     const prevPokemon = () => {
-        const tempNumber = pokemonNumber - 1;
-        setPokemonNumber(tempNumber);
-        props.fetchPokemonByNumber(pokemonNumber);
+        props.fetchPrevPokemonByNumber(props.pokeIndex);
     }
 
     const searchPokemon = (e) => {
         e.preventDefault();
-        console.log('Expect Zapdos', newPokemon);
         props.fetchPokemonByName(newPokemon);
     }
     
@@ -37,8 +31,8 @@ const PokeList = props => {
     return (
         <div>
             <div className='pokemon-form'>
-                {/*<button onClick={prevPokemon}>Previous Pokemon</button>       
-                <button onClick={nextPokemon}>Next Pokemon</button>*/}
+                <button onClick={prevPokemon}>Previous Pokemon</button>       
+                <button onClick={nextPokemon}>Next Pokemon</button>
                 <form onSubmit={searchPokemon}>
                     <label>Pokemon Name: </label>
                     <input
@@ -50,7 +44,7 @@ const PokeList = props => {
                     <button>Search Pokemon</button>
                 </form>
             </div>
-            {props.pokemon && !props.isLoading && (
+            {props.initialized && !props.isLoading && (
                 <div className='pokemon-info'>
                     <Pokemon 
                     name={props.pokemon.name}
@@ -67,8 +61,13 @@ const PokeList = props => {
 
 const mapStateToProps = state => {
     return {
-        pokemon: state.pokemon
+        pokemon: state.pokemon,
+        isLoading: state.isLoading,
+        initialized: state.initialized,
+        pokeIndex: state.pokeIndex
     }
 }
 
-export default connect(mapStateToProps, {fetchPokemonByNumber, fetchPokemonByName})(PokeList);
+export default connect(mapStateToProps, {
+    fetchNextPokemonByNumber, fetchPrevPokemonByNumber, fetchPokemonByName
+    })(PokeList);
