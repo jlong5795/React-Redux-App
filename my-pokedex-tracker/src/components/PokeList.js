@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Pokemon from './Pokemon';
 
-import { fetchNextPokemonByNumber, fetchPrevPokemonByNumber, fetchPokemonByName } from '../actions';
+import { fetchNextPokemonByNumber, fetchPrevPokemonByNumber, fetchPokemonByName, updatePokedex } from '../actions';
 
 const PokeList = props => {
     
@@ -25,14 +25,21 @@ const PokeList = props => {
         e.preventDefault();
         props.fetchPokemonByName(newPokemon);
     }
+
+    const updatePokedex = () => {
+        props.updatePokedex();
+    }
     
     
 
     return (
         <div>
             <div className='pokemon-form'>
-                <button onClick={prevPokemon}>Previous Pokemon</button>       
-                <button onClick={nextPokemon}>Next Pokemon</button>
+                <div>
+                    <button onClick={prevPokemon}>Previous Pokemon</button>       
+                    <button onClick={nextPokemon}>Next Pokemon</button>
+                </div>
+                <button onClick={updatePokedex}>Update Local Pokedex</button>
                 <form onSubmit={searchPokemon}>
                     <label>Pokemon Name: </label>
                     <input
@@ -69,5 +76,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    fetchNextPokemonByNumber, fetchPrevPokemonByNumber, fetchPokemonByName
+    fetchNextPokemonByNumber, fetchPrevPokemonByNumber, fetchPokemonByName, updatePokedex
     })(PokeList);

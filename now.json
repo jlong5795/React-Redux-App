@@ -1,0 +1,8 @@
+{
+    "version": 2,
+    "name": "my-pokedex-tracker",
+    "builds": [{ "src": "my-pokedex-tracker/package.json", "use": "@now/static-build", "config": {"distDir": "build"} }],
+    "routes": [
+        { "src": "/(.*)", "dest": "my-pokedex-tracker/$1" }
+    ]
+}
