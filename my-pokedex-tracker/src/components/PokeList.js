@@ -58,6 +58,7 @@ const PokeList = props => {
                     sprite={props.pokemon.sprite}
                     height={props.pokemon.height}
                     weight={props.pokemon.weight}
+                    id={props.pokemon.id}
                 />
             </div>
         )
